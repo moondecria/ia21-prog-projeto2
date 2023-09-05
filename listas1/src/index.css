@@ -15,7 +15,7 @@
 }
 
 a {
-  font-weight: 500;
+  font-weight: 400;
   color: #646cff;
   text-decoration: inherit;
 }
@@ -24,11 +24,15 @@ a:hover {
 }
 
 body {
-  margin: 0;
+  margin: 40;
   display: flex;
+  align-items:center;
+  justify-content:center;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #faef90;
+ 
 }
 
 h1 {
@@ -54,6 +58,12 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+h1 {
+  margin: 0;
+  padding: 20px 0;
+  color: #00539f;
+  text-shadow: 3px 3px 1px black;
+}
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -67,3 +77,4 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
