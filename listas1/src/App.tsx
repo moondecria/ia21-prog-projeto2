@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useMemo ,useCallback } from 'react'
 
 //Função principal
 export default function App(){
 
+  const inputRef= useRef<HTMLInputElement>(null);
+  const primeiraR = useRef(true);
   const [input, setInput] = useState("");
   const [tarefas, setTarefas] = useState<string[]>([])
 
@@ -10,17 +12,28 @@ export default function App(){
     enabled: false,
     tarefa:''
   })
-  const [teste, useTeste] = useState(false);
-
-
-  useEffect(() =>{
+    
+    useEffect(()=>{
       const tarefaSalva = localStorage.getItem("@cursoreact")
-      console.log(tarefaSalva)
-  }, [])
+      if(tarefaSalva){
+        setTarefas(JSON.parse(tarefaSalva));
+      }
+    
+    }, [])
 
+    useEffect( () => {
+    if(primeiraR.current){
+      primeiraR.current=false;
+      return;
+    }
+    
+    localStorage.setItem("@cursoreact",JSON.stringify(tarefas))
+    console.log("useEffect chamado!")
+  } ,[tarefas]);
   
+    
 
-    function registrar(){
+    const registrar = useCallback( () => {
       if(!input){
         alert("Preencha o nome da sua tarefa")
         return;
@@ -30,9 +43,11 @@ export default function App(){
         editarTarefaSalva();
         return;
       }
+    
 
       setTarefas(tarefas => [...tarefas, input])
       setInput("")
+      localStorage.setItem("@cursoreact",JSON.stringify([...tarefas, input]))
     }
 
     function editarTarefaSalva(){
@@ -46,44 +61,49 @@ export default function App(){
         tarefa: ''
       })
       setInput("")
-      localStorage.setItem("@cursoreact" ,JSON.stringify([...tarefas,input]))
-
+     
     }
 
     function excluir(item: string){
       const excluirTarefa = tarefas.filter(tarefas => tarefas !== item)
       setTarefas(excluirTarefa)
-      localStorage.setItem("@cursoreact", JSON.stringify(excluirTarefa))
+      
     }
     function editar(item: string){
+      inputRef.current?.focus();
       setInput(item)
       setEditarTarefa({
         enabled:true,
         tarefa: item
       })
     }
-    setInput("")
 
-    localStorage.setItem("@cursoreact", JSON.stringify(todaTarefa))
-  
+    const TotalTarefas =useMemo(()=>{
+      return tarefas.length
+    },[tarefas])
+
    return (
       <div>
-        <button onClick={() => setTeste(true)}>clicar</button>
-        <h1>Lista de tarefas🌛</h1>
+
+        
+        <h1>Lista de tarefas 🌛 </h1>
 
         <input
-          placeholder="escreva sua tarefa..☽"
+          placeholder="Digite uma tarefa..."
           value={input}
           onChange={ (e) => setInput(e.target.value)}
+          ref={inputRef}
         />
-        <button onClick={registrar}> {editarTarefa.enabled ? "atualizar tarefa" : "Adicionar tarefa"}</button>
+        <button onClick={registrar}>{editarTarefa.enabled ? "Atualizar tarefa" : "Adicionar Tarefa"}</button>
         <hr/>
         
+        <strong>você tem: {tarefas.length}tarefas!</strong>
+
         {tarefas.map( (item, index) =>(
           <section key={item}>
             <span>{item}</span>
-            <button onClick={ () => excluir(item) }>Exclua a sua tarefa</button>
-            <button onClick={ () => editar(item)}>Edite sua tarefa</button>
+            <button onClick={ () => excluir(item) }>Excluir</button>
+            <button onClick={ () => editar(item)}>Editar</button>
           </section>
 
         ))}
