@@ -1,67 +1,70 @@
 import { useState } from 'react'
-import logo from './assets/bomdia.jpg'
+import logo from './assets/frases.png'
 import './App.css'
 
-
 function App() {
-
-  const [ textoFrase, setTextoFrase] = useState("")
-  const [cateagoriaSelecionada]
-
+  const [ textoFrase, setTextoFrase ] = useState("")
+  const [ categoriaSelecionada, setCategoriaSelecionada ] = useState(0)
   const todasFrases = [
-    {id:1,
-    nome:"Motivacional",
-    frases:['Uma ótima manhã para todos! Leve a vida leve e brilhante como um campo de girassóis. 🌻🌻🌻',
-
-    'Você cria a sua própria vida, um dia de cada vez! Tenha um dia iluminado e cheio de motivação! 💛',
-    
-    'As pessoas felizes são aquelas que sabem enxergar o lado bom em todas as coisas. Bom dia, povo! 😋',
-    
-    'Bom dia! Que o sol desta manhã nos relembre que tudo o que precisamos está dentro de nós!',
-
-]
-},
-
-
-(id:2,
-  nome: "bom dia",
-  frases: ['Uma ótima manhã para todos! Leve a vida leve e brilhante como um campo de girassóis. 🌻🌻🌻',
-
-  'Você cria a sua própria vida, um dia de cada vez! Tenha um dia iluminado e cheio de motivação! 💛',
-  
-  'As pessoas felizes são aquelas que sabem enxergar o lado bom em todas as coisas. Bom dia, povo! 😋',
-  
-  'Bom dia! Que o sol desta manhã nos relembre que tudo o que precisamos está dentro de nós!',
-  ])
-},
-
-(id:2,
-  nome:""
-  
-  return (
-    
-      <div className='container'>
-       <img 
-       alt="logo frases"
-       src={logo}
-       />
-
-       <h2>categorias</h2>
-       <section className='area-categoria'>
-       {todasFrases.map( (item, index)=>(
-       <button className='botao-categoria' key={Item.id}>
-       <button className='botao categoria' key={item.id}>
-       <button className='botao categoria'>Boa noite</button>
-       </section>
-       <button className='botao-frases'>Gerar frases</button>
-
-       {textoFrase !== '' &&<p className='texto-frase'>{textoFrase}</p>}
+    {
+      id: 1,
+      nome: "Motivacional",
+      frases: [ 'Devíamos ser ensinados a não esperar por inspiração para começar algo. Ação sempre gera inspiração. Inspiração raramente gera ação.',
+                'Descubra quem é você, e seja essa pessoa. A sua alma foi colocada nesse mundo para ser isso, então viva essa verdade e todo resto virá.',
+                'Não é a carga que o derruba, mas a maneira como você a carrega.',
+                'Não existe nada de completamente errado no mundo, mesmo um relógio parado, consegue estar certo duas vezes por dia.',
+        
        
-      
-      
+      ]
+    },
+    {
+      id: 2,
+      nome: "Bom dia",
+      frases: [ 'Bom dia! Ouse sonhar! Você é muito mais capaz do que a sua mente te diz.',
+                'Bom dia! Ouse sonhar! Você é muito mais capaz do que a sua mente te diz.',
+                'Que o seu dia seja marcado por novas conquistas e objetivos concluídos! Uma excelente manhã para todos!',
+                'Foco, força e coragem para que hoje seja um dia marcado por metas concluídas. Bom dia!',
+        
+      ]
+    },
+    {
+      id: 3,
+      nome: "Boa noite",
+      frases: [ 'Nunca desista daquilo que você pede a Deus todas as noites. Que as suas orações em breve sejam correspondidas! Boa noite de tranquilidade para você.',
+                'Que sua noite seja tranquila e seu sono seja suave, para que o seu dia seja abençoado como deve ser. Boa noite! Descanse na certeza de que Deus cuida de tudo.',
+                'Respire. Tome uma dose de paz. Escute o bater manso do coração. Silencie a mente. Relaxe o corpo. Descanse. Amanhã tem mais... Boa noite!',
+                'Esse é um bom momento, uma boa oportunidade para descansar, perdoar, esquecer, sonhar e se preparar para os desafios do dia seguinte. Tenha uma boa noite!',
+
+        
+      ]
+    }
+  ]
+
+  function categoriaEscolhida (index: number) {
+    console.log("Posição do item clicado", index)
+  }
+
+  return (
+    <>
+      <div className="container">
+        <img
+          alt="Logo frases"
+          src={logo}
+          className="logo"
+        />
+        <h2 className="titulo" >Categorias</h2>
+        <section className="area-categoria" >
+          { todasFrases.map( (item,index) => (
+            <button  key={item.id} className="botao-categoria" 
+            style={{borderWidth: item.nome === todasFrases[categoriaSelecionada].nome? 2: 0, borderColor: 'blue'}} 
+            onClick={() => categoriaEscolhida(index)}
+            >{item.nome}</button>
+          )) }
+        </section>
+        <button className="botao-frase" >Gerar frases</button>
+        { textoFrase !== '' && <p className="texto-frase" >{ textoFrase }</p> }
       </div>
-     
-    
+    </>
   )
 }
 
