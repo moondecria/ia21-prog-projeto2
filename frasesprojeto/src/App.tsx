@@ -41,7 +41,12 @@ function App() {
   ]
 
   function categoriaEscolhida (index: number) {
-    console.log("Posição do item clicado", index)
+    setCategoriaSelecionada (index);
+  }
+
+  function gerarFrase (){
+  let numeroAleatorio = Math.floor(Math.random() * todasFrases [categoriaSelecionada].frases.length)
+  setTextoFrase(`"${todasFrases[categoriaSelecionada].frases[numeroAleatorio]}"`)
   }
 
   return (
@@ -61,7 +66,7 @@ function App() {
             >{item.nome}</button>
           )) }
         </section>
-        <button className="botao-frase" >Gerar frases</button>
+        <button className="botao-frase" onClick = {gerarFrase}>gerarFrase</button>
         { textoFrase !== '' && <p className="texto-frase" >{ textoFrase }</p> }
       </div>
     </>
