@@ -1,35 +1,38 @@
-import React { useState } from 'react';
-import logo from './assets/lua.jpg'
+import { useState, useCallback } from 'react'
+import reactLogo from './assets/o-o.com.png'
 import './App.css'
 
+function App() {
+  const [inputAno, setInputAno] = useState("");
+  
 
-
-function AgeCalculator() {
-  const [birthDate, setBirthDate] = useState('');
-  const [age, setAge] = useState(null);
-
-  const calculateAge = () => {
-    const birthDateObj = new Date(birthDate);
-    const currentDate = new Date();
-
-    const ageInMilliseconds = currentDate - birthDateObj;
-    const ageInYears = ageInMilliseconds / (1000 * 60 * 60 * 24 * 365.25);
-
-    setAge(Math.floor(ageInYears));
-  };
+  const calcular = useCallback ( () => {
+    if (!inputAno) {
+      alert("Preencha os campos corretamentes!")
+      return
+    }
+    console.log(".......")
+  }, [ inputAno ])
 
   return (
-    <div>
-      <h1>Calculadora de Idade</h1>
-      <input
-        type="date"
-        value={birthDate}
-        onChange={(e) => setBirthDate(e.target.value)}
-      />
-      <button onClick={calculateAge}>Calcular Idade</button>
-      {age !== null && <p>Sua idade é: {age} anos</p>}
-    </div>
-  );
+    <>
+        <div className="pricipal">
+          <div>
+            <img src={reactLogo} className="logo react" alt="React logo" />
+          </div>
+          <h1>Descubra a sua Idade</h1>
+          <hr/>
+          <label>Digite seu nome:</label>
+          <input placeholder="Insira aqui..." type="text" required />
+
+          <label>Digite o ano em que você nasceu:</label>
+          <input value={ inputAno } className="ano-nascimento" placeholder="Insira aqui..." type="number" required />
+
+          <button className='bt-calcular' onClick={ calcular } >Calcular Idade</button>
+          <p className="rodape-idade">A idade apare aqui!</p>
+        </div>
+    </>
+  )
 }
 
-export default AgeCalculator;
+export default App
