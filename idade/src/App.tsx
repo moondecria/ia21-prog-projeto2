@@ -23,10 +23,10 @@ function App() {
           <h1>Descubra a sua Idade</h1>
           <hr/>
           <label>Digite seu nome:</label>
-          <input placeholder="Insira aqui..." type="text" required />
+          <input placeholder="digite aqui seu nome" type="text" required />
 
           <label>Digite o ano em que você nasceu:</label>
-          <input value={ inputAno } className="ano-nascimento" placeholder="Insira aqui..." type="number" required />
+          <input value={ inputAno } className="ano-nascimento" placeholder="digite aqui seu ano de nascimento" type="number" required />
 
           <button className='bt-calcular' onClick={ calcular } >Calcular Idade</button>
           <p className="rodape-idade">A idade apare aqui!</p>
